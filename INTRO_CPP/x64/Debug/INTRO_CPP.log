@@ -1,0 +1,3 @@
+﻿  INTRO_CPP.cpp
+X:\Cours\C63DEMO\INTRO_CPP\INTRO_CPP.cpp(79,19): warning C4305: 'initialisation' : troncation de 'double' à 'float'
+  INTRO_CPP.vcxproj -> X:\Cours\C63DEMO\x64\Debug\INTRO_CPP.exe

@@ -1,114 +1,161 @@
 #include "Logger.h"
-#include <fstream>
-#include <iostream>
-#include <string>
 
 
 using namespace std;
 
-LoopEngine::Logger::Logger(const TLevel InLoggingLevel, bool InConsoleTraceActive, bool InFileTraceActive)
-{
-}
+namespace LoopEngine {
 
-LoopEngine::Logger::~Logger()
-{
-}
+    Logger::Logger(const TLevel InLoggingLevel, bool InConsoleTraceActive, bool InFileTraceActive)
+        : _LoggingLevel(InLoggingLevel),
+          _IsConsoleTraceActive(InConsoleTraceActive),
+          _IsFileTraceActive(InFileTraceActive) {
+        if (InFileTraceActive) {
+            TryOpenFile();
+        }
+    }
 
-void LoopEngine::Logger::ActivateConsoleTrace(bool InIsActive)
-{
-	if (_IsConsoleTraceActive != InIsActive)
-	{
-		_IsConsoleTraceActive = InIsActive;
-	}
-}
+    Logger::~Logger() {
+        TryCloseFile();
+    }
 
-void LoopEngine::Logger::SetLoggingLevel(const TLevel InLoggingLevel)
-{
-	_LoggingLevel = InLoggingLevel;
-}
+    void Logger::ActivateConsoleTrace(bool InIsActive) {
+        _IsConsoleTraceActive = InIsActive;
+    }
 
-void LoopEngine::Logger::Log(string msg, const TLevel InLoggingLevel) const
-{
-	string logMessage = "";
+    void Logger::SetLoggingLevel(const TLevel InLoggingLevel) {
+        _LoggingLevel = InLoggingLevel;
+    }
 
-	switch(InLoggingLevel)
-	{
-	case eINFO:
-		logMessage += "Info";
-		break;
-	case eWARNING:
-		logMessage += "Warning";
-		break;
-	case eDEBUG:
-		logMessage += "Debug";
-		break;
-	case eERROR:
-		logMessage += "Error";
-		break;
-	default:
-			break;
-	}
-		
-	logMessage += msg;
+    void Logger::Log(string msg, const TLevel InLoggingLevel) const {
+        if (InLoggingLevel < _LoggingLevel) {
+            return;
+        }
 
-	if (_IsFileTraceActive)
-	{
-		if (TryOpenFile())
-		{ 
+        string prefix;
+        switch (InLoggingLevel) {
+            case eINFO:    prefix = "[INFO] "; break;
+            case eWARNING: prefix = "[WARNING] "; break;
+            case eDEBUG:   prefix = "[DEBUG] "; break;
+            case eERROR:   prefix = "[ERROR] "; break;
+            default:       prefix = "[UNKNOWN] "; break;
+        }
 
-			TryCloseFile()
-		}
+        string fullMsg = prefix + msg;
 
-	}
-	if (_IsConsoleTraceActive)
-	{
-		cout << logMessage << endl;
-	}
-}
+        if (_IsConsoleTraceActive) {
+            cout << fullMsg << endl;
+        }
 
-void LoopEngine::Logger::ActivateFileTrace(bool InIsActive)
-{
-	if (_IsFileTraceActive != InIsActive)
-	{
-		_IsFileTraceActive = InIsActive;
-	}
-	
-}
+        if (_IsFileTraceActive && _ptrFileStream != nullptr && _ptrFileStream->is_open()) {
+            (*_ptrFileStream) << fullMsg << endl;
+        }
 
-void LoopEngine::Logger::ActivateFileTrace(bool InIsActive, const string& InFileName)
-{
-	ActivateFileTrace(InIsActive);
-	SetFileTraceName(InFileName);
-}
+        if (InLoggingLevel >= _AbortLevel) {
+            CustomAbort(fullMsg);
+        }
+    }
 
-void LoopEngine::Logger::SetFileTraceName(const string InFileTraceName)
-{
-	_TraceFileName = InFileTraceName;
-	TryOpenFile();
-}
+    void Logger::ActivateFileTrace(bool InIsActive) {
+        if (InIsActive == _IsFileTraceActive) {
+            return;
+        }
 
-void LoopEngine::Logger::SetAbortLevel(const TLevel InAbortLevel)
-{
-	_AbortLevel = InAbortLevel;
-}
+        _IsFileTraceActive = InIsActive;
 
-bool LoopEngine::Logger::TryOpenFile()
-{
-	_ptrFileStream("example.txt");
-	if (_ptrFileStream.is_open())
-	{
-		return true;
-	}
-	else
-	{
-		ActivateConsoleTrace(true);
-		Log("Unable to open file", eERROR);
-	}
-	return false;
-}
+        if (_IsFileTraceActive) {
+            TryOpenFile();
+        } else {
+            TryCloseFile();
+        }
+    }
 
-bool LoopEngine::Logger::TryCloseFile()
-{
+    void Logger::ActivateFileTrace(bool InIsActive, const string& InFileName) {
+        if (InFileName.empty()) {
+            Log("ActivateFileTrace : nom de fichier vide", eERROR);
+            return;
+        }
 
-	return false;
+        SetFileTraceName(InFileName);
+        ActivateFileTrace(InIsActive);
+    }
+
+    void Logger::SetFileTraceName(const string InFileTraceName) {
+        if (InFileTraceName.empty()) {
+            if (_IsFileTraceActive) {
+                Log("SetFileTraceName: nom de fichier vide", eERROR);
+            }
+            return;
+        }
+        else if (_IsFileTraceActive) {
+            Log("SetFileTraceName: Impossible de changer le nom du fichier lorsque la trace est activé", eERROR);
+        }
+
+        if (InFileTraceName == _TraceFileName) {
+            return;
+        }
+
+        string previousName = _TraceFileName;
+        _TraceFileName = InFileTraceName;
+
+        if (_IsFileTraceActive) {
+            if (!TryOpenFile()) {
+                _TraceFileName = previousName;
+                if (!TryOpenFile()) {
+                    _IsFileTraceActive = false;
+                    Log("SetFileTraceName : échec d'ouverture du fichier, désactivation de la trace fichier", eERROR);
+                } else {
+                    Log("SetFileTraceName : échec d'ouverture du nouveau fichier, retour à l'ancien", eERROR);
+                }
+            }
+        }
+    }
+
+    void Logger::SetAbortLevel(const TLevel InAbortLevel) {
+        _AbortLevel = InAbortLevel;
+    }
+
+    bool Logger::TryOpenFile() {
+        if (_ptrFileStream != nullptr) {
+            return true;
+        }
+
+        _ptrFileStream = new ofstream();
+        _ptrFileStream->open(_TraceFileName, ios::app);
+
+        if (!_ptrFileStream->is_open()) {
+            delete _ptrFileStream;
+            _ptrFileStream = nullptr;
+            return false;
+        }
+
+        return true;
+    }
+
+    bool Logger::TryCloseFile() {
+        if (_ptrFileStream == nullptr) {
+            return true;
+        }
+
+        if (_ptrFileStream->is_open()) {
+            _ptrFileStream->close();
+        }
+
+        delete _ptrFileStream;
+        _ptrFileStream = nullptr;
+
+        return true;
+    }
+
+    void Logger::CustomAbort(const string fullMsg) const {
+        string abortMessage = "ABORTED:\n" + fullMsg;
+
+        #ifdef _WIN32
+        MessageBoxA(nullptr, abortMessage.c_str(), "ERREUR", MB_ICONERROR);
+        #else
+        cerr << abortMessage << endl;
+        #endif
+
+        exit(EXIT_FAILURE);
+    }
+
 }

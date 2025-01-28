@@ -1,6 +1,10 @@
 #pragma once
 
 #include <string>
+#include <Windows.h>
+#include <fstream>
+#include <iostream>
+#include <cstdlib>
 using namespace std;
 
 namespace LoopEngine
@@ -49,6 +53,7 @@ namespace LoopEngine
         //Méthodes suggérées mais pas obligatoire.
         bool TryOpenFile();
         bool TryCloseFile();
+        void CustomAbort(const string fullMsg) const;
     };
 };
 

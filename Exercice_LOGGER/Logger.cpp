@@ -1,6 +1,5 @@
 #include "Logger.h"
 
-
 using namespace std;
 
 namespace LoopEngine {
@@ -27,6 +26,7 @@ namespace LoopEngine {
     }
 
     void Logger::Log(string msg, const TLevel InLoggingLevel) const {
+        SetConsoleOutputCP(1252);
         if (InLoggingLevel < _LoggingLevel) {
             return;
         }
@@ -43,16 +43,18 @@ namespace LoopEngine {
         string fullMsg = prefix + msg;
 
         if (_IsConsoleTraceActive) {
+            
             cout << fullMsg << endl;
         }
 
         if (_IsFileTraceActive && _ptrFileStream != nullptr && _ptrFileStream->is_open()) {
             (*_ptrFileStream) << fullMsg << endl;
         }
+        assert(InLoggingLevel >= _AbortLevel);
 
-        if (InLoggingLevel >= _AbortLevel) {
+        /* if (InLoggingLevel >= _AbortLevel) {
             CustomAbort(fullMsg);
-        }
+        }*/
     }
 
     void Logger::ActivateFileTrace(bool InIsActive) {
@@ -149,11 +151,8 @@ namespace LoopEngine {
     void Logger::CustomAbort(const string fullMsg) const {
         string abortMessage = "ABORTED:\n" + fullMsg;
 
-        #ifdef _WIN32
         MessageBoxA(nullptr, abortMessage.c_str(), "ERREUR", MB_ICONERROR);
-        #else
-        cerr << abortMessage << endl;
-        #endif
+
 
         exit(EXIT_FAILURE);
     }

@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
-#include <Windows.h>
+#include <windows.h>
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
+#include <cassert>
 using namespace std;
 
 namespace LoopEngine

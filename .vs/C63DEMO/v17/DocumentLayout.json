@@ -1,18 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\nahel\\Desktop\\C63DEMO\\",
+  "WorkspaceRootPath": "C:\\Users\\nahel\\OneDrive\\Bureau\\C63DEMO\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{67680E57-489E-4686-8B40-C8DF1B39268A}|Exercice_LOGGER\\Exercice_LOGGER.vcxproj|C:\\Users\\nahel\\Desktop\\C63DEMO\\Exercice_LOGGER\\Logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{67680E57-489E-4686-8B40-C8DF1B39268A}|Exercice_LOGGER\\Exercice_LOGGER.vcxproj|solutionrelative:Exercice_LOGGER\\Logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{67680E57-489E-4686-8B40-C8DF1B39268A}|Exercice_LOGGER\\Exercice_LOGGER.vcxproj|C:\\Users\\nahel\\Desktop\\C63DEMO\\Exercice_LOGGER\\Logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{67680E57-489E-4686-8B40-C8DF1B39268A}|Exercice_LOGGER\\Exercice_LOGGER.vcxproj|solutionrelative:Exercice_LOGGER\\Logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{67680E57-489E-4686-8B40-C8DF1B39268A}|Exercice_LOGGER\\Exercice_LOGGER.vcxproj|C:\\Users\\nahel\\Desktop\\C63DEMO\\Exercice_LOGGER\\Exercice_LOGGER.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{67680E57-489E-4686-8B40-C8DF1B39268A}|Exercice_LOGGER\\Exercice_LOGGER.vcxproj|solutionrelative:Exercice_LOGGER\\Exercice_LOGGER.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{F4AEAE8E-CCA5-4907-82D7-F1CDF5B86DD5}|RayLibPacMan\\RayLibPacMan.vcxproj|C:\\Users\\nahel\\OneDrive\\Bureau\\C63DEMO\\RayLibPacMan\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F4AEAE8E-CCA5-4907-82D7-F1CDF5B86DD5}|RayLibPacMan\\RayLibPacMan.vcxproj|solutionrelative:RayLibPacMan\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,45 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Logger.cpp",
-              "DocumentMoniker": "C:\\Users\\nahel\\Desktop\\C63DEMO\\Exercice_LOGGER\\Logger.cpp",
-              "RelativeDocumentMoniker": "Exercice_LOGGER\\Logger.cpp",
-              "ToolTip": "C:\\Users\\nahel\\Desktop\\C63DEMO\\Exercice_LOGGER\\Logger.cpp",
-              "RelativeToolTip": "Exercice_LOGGER\\Logger.cpp",
-              "ViewState": "AQIAAHgAAAAAAAAAAAAAAJQAAAAxAAAA",
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\nahel\\OneDrive\\Bureau\\C63DEMO\\RayLibPacMan\\main.cpp",
+              "RelativeDocumentMoniker": "RayLibPacMan\\main.cpp",
+              "ToolTip": "C:\\Users\\nahel\\OneDrive\\Bureau\\C63DEMO\\RayLibPacMan\\main.cpp",
+              "RelativeToolTip": "RayLibPacMan\\main.cpp",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACkAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-01-27T23:45:14.25Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Logger.h",
-              "DocumentMoniker": "C:\\Users\\nahel\\Desktop\\C63DEMO\\Exercice_LOGGER\\Logger.h",
-              "RelativeDocumentMoniker": "Exercice_LOGGER\\Logger.h",
-              "ToolTip": "C:\\Users\\nahel\\Desktop\\C63DEMO\\Exercice_LOGGER\\Logger.h",
-              "RelativeToolTip": "Exercice_LOGGER\\Logger.h",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAADcAAAAtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-28T00:01:05.392Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Exercice_LOGGER.cpp",
-              "DocumentMoniker": "C:\\Users\\nahel\\Desktop\\C63DEMO\\Exercice_LOGGER\\Exercice_LOGGER.cpp",
-              "RelativeDocumentMoniker": "Exercice_LOGGER\\Exercice_LOGGER.cpp",
-              "ToolTip": "C:\\Users\\nahel\\Desktop\\C63DEMO\\Exercice_LOGGER\\Exercice_LOGGER.cpp",
-              "RelativeToolTip": "Exercice_LOGGER\\Exercice_LOGGER.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-01-27T23:56:53.622Z",
+              "WhenOpened": "2025-02-10T00:44:29.212Z",
               "EditorCaption": ""
             }
           ]
